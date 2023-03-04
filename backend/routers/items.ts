@@ -1,5 +1,5 @@
-import express, {query} from "express";
-import mongoose, {Schema, Types} from "mongoose";
+import express from "express";
+import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
 import {ItemMutation} from "../types";
 import Item from "../models/Item";
@@ -8,8 +8,6 @@ import auth, {RequestWithUser} from "../middleware/auth";
 const itemsRouter = express.Router();
 
 itemsRouter.get('/', async (req, res, next) => {
-  // const categoryId = ObjectId(req.query.category)
-
   try {
     if (req.query.category) {
       const items = await Item.find({category: req.query.category});
@@ -21,15 +19,6 @@ itemsRouter.get('/', async (req, res, next) => {
     return next(e);
   }
 });
-
-// itemsRouter.get('/:id', async (req, res, next) => {
-//   try {
-//     const oneNews = await Item.findById(req.params.id);
-//     return res.send(oneNews);
-//   } catch (e) {
-//     return next(e);
-//   }
-// });
 
 itemsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
   const user = (req as RequestWithUser).user;
@@ -54,6 +43,23 @@ itemsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next)
     } else {
       return next(e);
     }
+  }
+});
+
+
+itemsRouter.delete('/:id', auth, async (req, res, next) => {
+  const user = (req as RequestWithUser).user;
+
+  try {
+    const item = await Item.findOne({author: user._id, _id: req.params.id});
+    if (item) {
+      await Item.deleteOne({author: item.author, _id: item._id});
+      return res.send("Item deleted");
+    } else {
+      return res.status(403).send("Нельзя удалить чужой продукт");
+    }
+  } catch (e) {
+    return next(e);
   }
 });
 

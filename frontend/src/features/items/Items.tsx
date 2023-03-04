@@ -23,7 +23,7 @@ const Items = () => {
     info = (
       <>
         {items.map((item) => (
-          <CardItem key={item._id} category={item.category} title={item.title} description={item.description} price={item.price} image={item.image} id={item._id}/>
+          <CardItem key={item._id} author={item.author} category={item.category} title={item.title} description={item.description} price={item.price} image={item.image} id={item._id}/>
         ))}
       </>
     )

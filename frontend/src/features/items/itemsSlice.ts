@@ -1,19 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Item } from '../../../types';
 import { RootState } from '../../app/store';
-import { addItem, fetchAllItems } from './itemsThunks';
+import { addItem, deleteItem, fetchAllItems } from './itemsThunks';
 
 
 interface ItemsState {
   items: Item[] | [];
   fetchAllLoading: boolean;
   addItemLoading: boolean;
+  deleteItemLoading: boolean;
 }
 
 const initialState: ItemsState = {
   items: [],
   fetchAllLoading: false,
   addItemLoading: false,
+  deleteItemLoading: false,
 }
 
 export const ItemsSlice = createSlice({
@@ -39,6 +41,15 @@ export const ItemsSlice = createSlice({
     });
     builder.addCase(addItem.rejected, (state) => {
       state.addItemLoading = false;
+    });
+    builder.addCase(deleteItem.pending, (state) => {
+      state.deleteItemLoading = true;
+    });
+    builder.addCase(deleteItem.fulfilled, (state) => {
+      state.deleteItemLoading = false;
+    });
+    builder.addCase(deleteItem.rejected, (state) => {
+      state.deleteItemLoading = false;
     });
   }});
 

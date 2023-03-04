@@ -41,6 +41,7 @@ export interface GlobalError {
 
 export interface Item {
   _id: string;
+  author: string;
   category: string;
   title: string;
   description: string;

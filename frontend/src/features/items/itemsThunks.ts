@@ -38,3 +38,17 @@ export const addItem = createAsyncThunk<void, ItemApi, { state: RootState }>(
     }
   }
 );
+
+export const deleteItem = createAsyncThunk<void, string, { state: RootState }>(
+  'items/delete',
+  async (id, {getState}) => {
+    const user = getState().users.user;
+
+    if (user) {
+
+      await axiosApi.delete('/items/' + id, {headers: {'Authorization': user.token}});
+    } else {
+      throw new Error('No user');
+    }
+  }
+);

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { apiUrl } from '../../../constants';
-import { NavLink } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { selectUser } from '../../../features/users/usersSlise';
+import { deleteItem, fetchAllItems } from '../../../features/items/itemsThunks';
 
 interface Props {
   id: string;
+  author: string;
   category: string;
   title: string;
   description: string;
@@ -12,7 +15,9 @@ interface Props {
   image: string | null;
 }
 
-const CardItem: React.FC<Props> = ({category, title, description, image, price, id}) => {
+const CardItem: React.FC<Props> = ({author, category, title, description, image, price, id}) => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
 
   let cardImage = undefined;
   let infoImage = null;
@@ -26,6 +31,18 @@ const CardItem: React.FC<Props> = ({category, title, description, image, price, 
     />)
   }
 
+  const removeItem = async () => {
+    await dispatch(deleteItem(id));
+    await dispatch(fetchAllItems());
+  }
+
+  let buttonInfo = null;
+  
+  if (user && user._id === author){
+    buttonInfo = <Button onClick={removeItem} style={{display: "block", marginLeft: '16px', marginBottom: "10px"}} variant="contained">Delete</Button>
+  } else {
+    buttonInfo = <Button style={{display: "none"}} variant="contained">Delete</Button>
+  }
 
   return (
     <Card sx={{maxWidth: 345, border: 1, mt: 2}}>
@@ -44,7 +61,7 @@ const CardItem: React.FC<Props> = ({category, title, description, image, price, 
           {category}
         </Typography>
       </CardContent>
-      <Button style={{marginLeft: '16px', marginBottom: "10px"}} variant="contained">Delete</Button>
+      {buttonInfo}
     </Card>
   );
 };
