@@ -2,8 +2,8 @@ import crypto from 'crypto';
 import mongoose from 'mongoose';
 import config from './config';
 import User from './models/User';
-import OneNews from "./models/OneNews";
-import Comment from "./models/Comment";
+import Item from "./models/Item";
+import Category from "./models/Category";
 
 const run = async () => {
   mongoose.set('strictQuery', false);
@@ -12,8 +12,8 @@ const run = async () => {
 
   try {
     await db.dropCollection('users');
-    await db.dropCollection('onenews');
-    await db.dropCollection('comments');
+    await db.dropCollection('categories');
+    await db.dropCollection('items');
   } catch (e) {
     console.log('Collections were not present, skipping drop...');
   }
@@ -21,92 +21,82 @@ const run = async () => {
   const [azamat, adilet] = await User.create(
     {
       username: "Azamat",
-      email: "azamat92@bk.ru",
       password: "12345",
+      displayName: "Display name Azamat",
+      phoneNumber: "0555000000",
       token: crypto.randomUUID()
     },
     {
       username: "Adilet",
-      email: "adilet94@mail.ru",
       password: "333",
+      displayName: "Display name Adilet",
+      phoneNumber: "0555111111",
       token: crypto.randomUUID()
     }
   );
 
-  const [aboutCars, aboutBooks, aboutEducation, aboutBuildings] = await OneNews.create(
+  const [cars, computers, clothing] = await Category.create(
     {
-      author: azamat._id,
-      title: "About Cars",
-      description: "Description about different cars",
-      image: "fixtures/cars.jpg",
-      date: new Date(),
+      title: "Cars",
     },
     {
-      author: azamat._id,
-      title: "About Books",
-      description: "Description about different books",
-      image: "fixtures/books.jpg",
-      date: new Date(),
+      title: "Computers",
     },
     {
-      author: adilet._id,
-      title: "About Education",
-      description: "Description about different education",
-      image: "fixtures/education.jpg",
-      date: new Date(),
-    },
-    {
-      author: adilet._id,
-      title: "About Buildings",
-      description: "Description about different buildings",
-      image: "fixtures/buildings.jpg",
-      date: new Date(),
-    },
+      title: "Clothing",
+    }
   );
 
-  await Comment.create(
+  await Item.create(
     {
       author: azamat._id,
-      oneNews: aboutCars._id,
-      message: "This car very good",
-    },
-    {
-      author: adilet._id,
-      oneNews: aboutCars._id,
-      message: "I like it too",
+      category: cars._id,
+      title: "Audi",
+      description: "Description about about audi",
+      price: 100,
+      image: "fixtures/audi.jpg",
     },
     {
       author: azamat._id,
-      oneNews: aboutBooks._id,
-      message: "This book very good",
-    },
-    {
-      author: adilet._id,
-      oneNews: aboutBooks._id,
-      message: "I like it too",
-    },
-    {
-      author: azamat._id,
-      oneNews: aboutEducation._id,
-      message: "This education very good",
-    },
-    {
-      author: adilet._id,
-      oneNews: aboutEducation._id,
-      message: "I like it too",
+      category: computers._id,
+      title: "Lenovo",
+      description: "Description about about lenovo",
+      price: 200,
+      image: "fixtures/lenovo.jpg",
     },
     {
       author: azamat._id,
-      oneNews: aboutBuildings._id,
-      message: "This buildings very good",
+      category: clothing._id,
+      title: "Pants",
+      description: "Description about about pants",
+      price: 300,
+      image: "fixtures/pants.jpg",
     },
     {
       author: adilet._id,
-      oneNews: aboutBuildings._id,
-      message: "I like it too",
+      category: cars._id,
+      title: "Lexus",
+      description: "Description about about lexus",
+      price: 400,
+      image: "fixtures/lexus.jpg",
+    },
+    {
+      author: adilet._id,
+      category: computers._id,
+      title: "HP",
+      description: "Description about about hp",
+      price: 500,
+      image: "fixtures/hp.jpg",
+    },
+    {
+      author: adilet._id,
+      category: clothing._id,
+      title: "Dress",
+      description: "Description about about dress",
+      price: 600,
+      image: "fixtures/dress.jpg",
     },
   );
-
 
   await db.close();
 };

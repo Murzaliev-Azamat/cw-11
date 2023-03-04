@@ -1,67 +1,3 @@
-export interface Artist {
-  _id: string;
-  name: string;
-  image: string;
-  info: string;
-}
-
-export interface Album {
-  _id: string;
-  artist: {
-    _id: string;
-    name: string;
-    image: string;
-    info: string;
-  }
-  name: string;
-  year: string;
-  image: string;
-}
-
-export interface Track {
-  _id: string;
-  album: {
-    _id: string;
-    artist: {
-      _id: string;
-      name: string;
-      image: string;
-      info: string;
-    }
-    name: string;
-    year: string;
-    image: string;
-  }
-  name: string;
-  time: string;
-  trackNumber: number;
-  linkToYoutube?: string;
-}
-
-export interface TrackHistory {
-  _id: string;
-  track: {
-    _id: string;
-    album: {
-      _id: string;
-      artist: {
-        _id: string;
-        name: string;
-        info: string;
-        image: string;
-      }
-        image: string;
-        name: string;
-        year: number;
-    }
-    name: string;
-    time: string;
-    trackNumber: number;
-  }
-  user: string;
-  datetime: string;
-}
-
 export interface RegisterMutation {
   username: string;
   password: string;
@@ -99,38 +35,25 @@ export interface GlobalError {
   error: string;
 }
 
-
-
-
-
-
-
-export interface OneNews {
-  _id: number;
+export interface Item {
+  _id: string;
+  category: string;
   title: string;
   description: string;
+  price: number;
   image: string | null;
-  date: string;
 }
 
-export interface OneNewsApi {
+export interface ItemApi {
+  category: string;
   title: string;
   description: string;
+  price: string;
   image: File | null;
 }
 
-export interface Comment {
-  _id: number;
-  author: {
-    _id: string;
-    username: string;
-  }
-  oneNews: string;
-  message: string;
+export interface Category {
+  _id: string;
+  title: string;
 }
 
-export interface CommentApi {
-  oneNews: string | undefined;
-  // author: string;
-  message: string;
-}

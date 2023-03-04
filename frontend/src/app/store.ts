@@ -3,8 +3,8 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
 import { usersReducer } from '../features/users/usersSlise';
-import { newsReducer } from '../features/news/newsSlice';
-import { commentsReducer } from '../features/comments/commentsSlice';
+import { itemsReducer } from '../features/news/itemsSlice';
+import { categoriesReducer } from '../features/categories/categoriesSlice';
 
 const usersPersistConfig = {
   key: 'newsApp:users',
@@ -13,8 +13,8 @@ const usersPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-  news: newsReducer,
-  comments: commentsReducer,
+  items: itemsReducer,
+  categories: categoriesReducer,
   users: persistReducer(usersPersistConfig, usersReducer),
 });
 

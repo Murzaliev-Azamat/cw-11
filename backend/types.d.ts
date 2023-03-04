@@ -1,19 +1,16 @@
-export interface OneNewsMutation {
+export interface ItemMutation {
   author: ObjectId;
+  category: ObjectId;
   title: string;
   description: string;
+  price: number;
   image: string | null;
-  date: Date;
-}
-
-export interface CommentMutation {
-  author: ObjectId;
-  oneNews: ObjectId;
-  message: string;
 }
 
 export interface IUser {
   username: string;
   password: string;
+  displayName: string;
+  phoneNumber: string;
   token: string;
 }
