@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectCategories, selectFetchAllCategoriesLoading } from './categoriesSlice';
 import { fetchAllCategories } from './categoriesThunks';
 import { NavLink } from 'react-router-dom';
-import { fetchAllItems } from '../news/itemsThunks';
+import { fetchAllItems } from '../items/itemsThunks';
 
 const Categories = () => {
   const dispatch = useAppDispatch();

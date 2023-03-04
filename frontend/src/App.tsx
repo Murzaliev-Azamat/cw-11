@@ -4,8 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import AppToolBar from './components/UI/AppToolBar/AppToolBar';
 import Register from './features/users/Register';
 import Login from './features/users/Login';
-import Items from './features/news/Items';
-import FormForItems from './features/news/FormForItems';
+import Items from './features/items/Items';
+import FormForItems from './features/items/FormForItems';
 
 function App() {
   return (

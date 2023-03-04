@@ -1,11 +1,15 @@
 export interface RegisterMutation {
   username: string;
   password: string;
+  displayName: string;
+  phoneNumber: string;
 }
 
 export interface User {
   _id: string;
+  displayName: string;
   username: string;
+  phoneNumber: string;
   token: string;
 }
 
