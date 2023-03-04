@@ -96,6 +96,18 @@ const FormForItems = () => {
         </Grid>
 
         <Grid item xs>
+          <TextField
+            sx={{width: 1}}
+            multiline rows={3}
+            id="price" label="Price"
+            value={state.price}
+            onChange={inputChangeHandler}
+            name="price"
+            type="number"
+          />
+        </Grid>
+
+        <Grid item xs>
           <FileInput
             onChange={fileInputChangeHandler}
             name="image"
